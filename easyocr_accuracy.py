@@ -8,10 +8,9 @@ def run_test() -> None:
     # Parent directory where everything else is located
     parent_folder = r"E:\NoBackup\DGMD_E-14_FinalProject"
 
-    # keras-ocr will automatically download pretrained
-    # weights for the detector and recognizer.
-    # Set environment variable KERAS_OCR_CACHE_DIR to specify where the weights get downloaded
-    pipeline = predict.generate_reader()
+    # Set gpu False to use CPU only
+    # Set model_path with directory where model files should be downloaded
+    ocr = predict.generate_ocr()
 
     text_file_name = "pill_labels_challenge.txt"
     text_file = os.path.join(parent_folder, "ocr", text_file_name)
@@ -32,7 +31,7 @@ def run_test() -> None:
                                f"easyocr_accuracy_{text_file_name[0:-4]}{sample_display}_distance.csv")
     print(output_file)
 
-    utils.run_test(pipeline, labels, output_file, predict.generate_predictions, utils.find_distance)
+    utils.run_test(ocr, labels, output_file, predict.generate_predictions, utils.find_distance)
 
 
 if __name__ == "__main__":

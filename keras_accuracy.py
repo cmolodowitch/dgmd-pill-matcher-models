@@ -11,9 +11,9 @@ def run_test() -> None:
     # keras-ocr will automatically download pretrained
     # weights for the detector and recognizer.
     # Set environment variable KERAS_OCR_CACHE_DIR to specify where the weights get downloaded
-    pipeline = predict.initialize()
+    pipeline = predict.generate_ocr()
 
-    text_file_name = "pill_labels_full_clear.txt"
+    text_file_name = "pill_labels_challenge.txt"
     text_file = os.path.join(parent_folder, "ocr", text_file_name)
 
     labels = utils.read_c3pi_to_dataframe(text_file, parent_folder + r"\images\C3PI full data")

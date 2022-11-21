@@ -5,7 +5,7 @@ import cv2
 import keras_ocr
 
 
-def initialize():
+def generate_ocr():
     # keras-ocr will automatically download pretrained
     # weights for the detector and recognizer.
     # Set environment variable KERAS_OCR_CACHE_DIR to specify where the weights get downloaded
@@ -32,7 +32,7 @@ def _generate_single_prediction_set(pipeline, image) -> List[str]:
     return predictions
 
 
-def generate_predictions(pipeline, image_file: str, rotate=False) -> List[List[str]]:
+def generate_predictions(ocr, image_file: str, rotate=False) -> List[List[str]]:
     """
     Generates predictions from the specified image file, optionally rotating it by 90, 180, and 270 degrees (useful for
     testing accuracy against test images).
@@ -43,8 +43,8 @@ def generate_predictions(pipeline, image_file: str, rotate=False) -> List[List[s
     Note that the returned object will NOT be an empty List if no text is recognized.  It will instead contain one or
     more empty Lists, each from a permutation of the supplied image.
 
-    :param pipeline: keras-ocr pipeline, created/initialized outside this method so that batch testing doesn't have to
-                     recreate it for each image tested
+    :param ocr: keras-ocr pipeline, created/initialized outside this method so that batch testing doesn't have to
+                recreate it for each image tested
     :param image_file: path of the image file to check for text
     :param rotate: True if predictions should also be generated for the image at 90, 180, and 270 degrees, intended
                    for use with batch testing of stock images that may be rotated, defaults to False
@@ -64,8 +64,8 @@ def generate_predictions(pipeline, image_file: str, rotate=False) -> List[List[s
                     rotated = image
                 else:
                     rotated = imutils.rotate_bound(image, angle)
-                all_predictions.append(_generate_single_prediction_set(pipeline, rotated))
+                all_predictions.append(_generate_single_prediction_set(ocr, rotated))
         else:
-            all_predictions.append(_generate_single_prediction_set(pipeline, image))
+            all_predictions.append(_generate_single_prediction_set(ocr, image))
 
     return all_predictions

@@ -5,7 +5,7 @@ import cv2
 import easyocr
 
 
-def generate_reader(gpu=True, model_path=r"E:\NoBackup\DGMD_E-14_FinalProject\ocr\models"):
+def generate_ocr(gpu=True, model_path=r"E:\NoBackup\DGMD_E-14_FinalProject\ocr\models"):
     return easyocr.Reader(["en"], gpu=gpu, model_storage_directory=model_path)
 
 
